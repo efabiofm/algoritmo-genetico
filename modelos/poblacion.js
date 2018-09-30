@@ -7,16 +7,23 @@ function Poblacion(objetivo, rateMutacion, poblacionMax) {
   var poblacion = [];
   var matingPool = [];
 
+  // primera generación de individuos
   for(var i = 0; i < poblacionMax; i++) {
-    poblacion[i] = new Genotipo(objetivo.length);
+    poblacion[i] = new Genotipo(objetivo.length); // array de caracteres aleatorios
   }
 
+  // calcula el fitness de todos los individuos
   this.calcFitness = function() {
     forEach(poblacion, (gen) => {
       gen.calcFitness(objetivo);
     });
   };
 
+  /*
+   * cada individuo se mete a la piscina según su fitness * 100
+   * ej. si tiene un fitness de 0.06, se mete 6 veces
+   * así es más probable escoger los de fitness más alto al aparearlos
+   */
   this.generarMatingPool = function() {
     matingPool = [];
     forEach(poblacion, (gen) => {
